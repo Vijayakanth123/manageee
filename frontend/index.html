@@ -6,6 +6,35 @@
     <title>managee</title>
 </head>
 <body>
-    
+    <input type="text" id="activity" placeholder="activity">
+    <input type="time" id="stime" placeholder="start time">
+    <input type="time" id="etime" placeholder="end time">
+    <button id="enter_btn">enter</button>
+
+    <div></div>
+
+
+
+    <script>
+        const activity = document.getElementById("activity");
+        const stime = document.getElementById("stime");
+        const etime = document.getElementById("etime");
+        const enter_btn = document.getElementById("enter_btn");
+
+        enter_btn.addEventListener("click",() => {
+            const data = {
+                activity : activity.value,
+                stime : stime.value,
+                etime : etime.value
+            };
+            fetch('',{
+                method : 'POST',
+                headers : {
+                    'content-Type' : 'application/json'
+                },
+                body : JSON.stringify(data)
+            })
+        })
+    </script>
 </body>
 </html>
