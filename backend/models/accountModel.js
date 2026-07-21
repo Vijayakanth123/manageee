@@ -15,3 +15,4 @@ const accountSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model("Account",accountSchema);
+// uses a collection named "accounts" in the database.
