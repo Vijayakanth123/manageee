@@ -16,25 +16,27 @@
 
 
     <script>
-        const activity = document.getElementById("activity");
-        const stime = document.getElementById("stime");
-        const etime = document.getElementById("etime");
+        const activityElem = document.getElementById("activity");
+        const stimeElem = document.getElementById("stime");
+        const etimeElem = document.getElementById("etime");
         const enter_btn = document.getElementById("enter_btn");
 
         enter_btn.addEventListener("click",() => {
             const data = {
-                activity : activity.value,
-                stime : stime.value,
-                etime : etime.value
+                activity : activityElem.value,
+                stime : stimeElem.value,
+                etime : etimeElem.value
             };
-            fetch('',{
+            fetch('/',{
                 method : 'POST',
                 headers : {
                     'content-Type' : 'application/json'
                 },
                 body : JSON.stringify(data)
             })
-        })
+            .then((res) => console.log("fetch request finished"))
+            .catch((err) => console.log(err));
+        });
     </script>
 </body>
 </html>

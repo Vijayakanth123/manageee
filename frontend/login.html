@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password">
+        <button id="login_btn">login</button>
+        <a href="/signup">signup</a>
+    </div>
+
+    <script>
+        const usernameElem = document.getElementById("username");
+        const passwordElem = document.getElementById("password");
+        const loginBtn = document.getElementById("login_btn");
+
+        loginBtn.addEventListener("click",()=>{
+            const data = {
+                username : usernameElem.value,
+                password : passwordElem.value,
+            }
+            fetch("/api/acc/login",{
+                method : "POST",
+                headers: {
+                    "content-Type" : "application/json",
+                },
+                body : JSON.stringify(data)
+            })
+            .then(()=> console.log("login successful"))
+            .catch((err) => console.log(err));
+        });
+    </script>
+</body>
+</html>

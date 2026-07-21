@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password">
+        <button id="signup_btn">signup</button>
+        <a href="/login">login</a>
+    </div>
+
+    <script>
+        const usernameElem = document.getElementById("username");
+        const passwordElem = document.getElementById("password");
+        const signupBtn = document.getElementById("signup_btn");
+
+        signupBtn.addEventListener("click",()=>{
+            const data = {
+                username : usernameElem.value,
+                password : passwordElem.value,
+            }
+            fetch("/api/acc/signup",{
+                method : "POST",
+                headers: {
+                    "content-Type" : "application/json",
+                },
+                body : JSON.stringify(data)
+            })
+            .then(()=> console.log("signup successful"))
+            .catch((err) => console.log(err));
+        });
+    </script>
+</body>
+</html>
