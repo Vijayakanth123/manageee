@@ -23,6 +23,11 @@
                 username : usernameElem.value,
                 password : passwordElem.value,
             }
+            if(!data.username || !data.password){
+                alert("username or password is empty");
+                return;
+            }
+            
             fetch("/api/acc/login",{
                 method : "POST",
                 headers: {

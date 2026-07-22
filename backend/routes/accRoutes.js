@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 //needed functions
 const { accModel } = require('../models/accountModel');
 const { signUp } = require('../controllers/accControllers');
-const {checkUsername} = require('../middleware/acc_ware');
+const {checkUsername , validateHashPassword} = require('../middleware/acc_ware');
 router.use(checkUsername);
 
 // for /acc/login
@@ -17,7 +17,7 @@ router.post("/login",(req,res)=>{
 });
 
 //for /acc/signup
-router.post("/signup",signUp);
+router.post("/signup",validateHashPassword,signUp);
 
 
 module.exports = router;
