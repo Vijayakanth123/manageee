@@ -4,17 +4,13 @@ const mongoose = require("mongoose");
 
 //needed functions
 const { accModel } = require('../models/accountModel');
-const { signUp } = require('../controllers/accControllers');
+const { signUp,login } = require('../controllers/accControllers');
 const {checkUsername , validateHashPassword} = require('../middleware/acc_ware');
+//validateHashPassword validates the password and hashes it in the req.body.password.
 router.use(checkUsername);
 
 // for /acc/login
-router.post("/login",(req,res)=>{
-    if(!req.body.userExists){
-        console.log("username doesnt exist to login");
-        res.send("username doesnt exist to login");
-    }
-});
+router.post("/login",login);
 
 //for /acc/signup
 router.post("/signup",validateHashPassword,signUp);

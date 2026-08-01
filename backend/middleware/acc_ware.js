@@ -45,6 +45,7 @@ exports.validateHashPassword = function(req,res,next){
         return res.send("doesnt match requirements");
     }
 
+    //hashing is done in middleware itself
     bcrypt.hash(req.body.password,6)
     .then((passwordHased) => {
         req.body.password=passwordHased;

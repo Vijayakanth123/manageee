@@ -27,4 +27,15 @@ exports.login = function (req,res){
         console.log("username is not registered");
         return res.send("username is not registered");
     }
+
+    accModel.findOne({username : req.body.username}).lean()
+    .then((doc) => {
+        return bcrypt.compare(req.body.password,doc.password_hashed);
+    })
+    .then((isCorrect) => {
+        if(isCorrect) console.log("correct password");
+        else console.log("incorrect password");
+    })
+    .catch((err) => console.log("error in login function/controllers"));
+    
 }
