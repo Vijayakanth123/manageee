@@ -3,12 +3,15 @@ import './gen.css';
 export default function Login() {
   return (
     <div class="box">
+      <div class="inner-box">
+        <Link to="/" class="b_btn"><button id="back_btn"> {'<'} </button></Link>
         <input type="text" id="username" placeholder="username" />
         <input type="password" id="password" placeholder="password" />
         <div>
           <button class="btn" id="login_btn">login</button>
           <Link to="/signup">signup</Link>
         </div>
+      </div>
     </div>
   );
 }
