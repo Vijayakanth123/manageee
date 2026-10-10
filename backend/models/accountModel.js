@@ -10,6 +10,12 @@ const accountSchema = new mongoose.Schema({
     password_hashed : {
         type : String,
         required: true
+    },
+
+    email:{
+        type: String,
+        unique: true,
+        required: true
     }
 });
 

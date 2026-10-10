@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const Account = require("../models/accountModel");
 
 exports.checkUsername =   function (req,res,next){
     //check if input is given and if it is valid.
@@ -22,7 +23,7 @@ exports.checkUsername =   function (req,res,next){
     }
 
     //adds if the username already exists or not in the req.body
-    mongoose.model("Account").exists({username: req.body.username})
+    Account.exists({username: req.body.username})
     .then((exists) => {
         req.body.userExists = Boolean(exists);
         next();
@@ -55,4 +56,41 @@ exports.validateHashPassword = function(req,res,next){
         console.log("error in bcrypt");
         next(err);
     })
+}
+
+exports.requireAuth = function(req, res, next) {
+  const token = req.cookies.accessToken; // Assuming your JWT is stored in this cookie
+
+  if (!token) {
+    return res.redirect('/login');
+  }
+
+  try {
+    // Verify the token using your secret key
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+    req.user = decoded; // Attach user data to the request if needed
+    next(); 
+  } catch (err) {
+    // Token is invalid or expired
+    res.clearCookie('accessToken');
+    return res.redirect('/login');
+  }
+}
+
+exports.redirectIfAuthenticated = function(req, res, next) {
+  const token = req.cookies.accessToken;
+
+  if (token) {
+    try {
+      // If the token is valid, bounce them away from the login page
+      jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      console.log("user already logged in");
+      return res.status(403).send("user already logged in");
+    } catch (err) {
+      // Token is invalid/expired, so clear it and let them see the login page
+      res.clearCookie('accessToken');
+    }
+  }
+
+  next();
 }

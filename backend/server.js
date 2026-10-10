@@ -1,18 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors"); 
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 //routes
 const accRoutes = require("./routes/accRoutes");
 
 //starting express instance and check
 const app = express();
-const PORT = 3000;
 
-
-app.use(cors());
 //middle-ware
+app.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true 
+}));
 app.use(express.json());
-app.use(express.static('../frontend')); // automatically serve files from that folder(without this both will run in different ports)
+app.use(cookieParser());
 app.use('/api/acc',accRoutes);
 
 // data-base connect and check
@@ -21,4 +27,5 @@ mongoose.connect(url)
 .then(() => console.log("Connected Successfully"))
 .catch((e) => console.log(e));
 
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Server running on: ${PORT}`));
